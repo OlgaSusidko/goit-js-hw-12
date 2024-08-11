@@ -1,11 +1,11 @@
+
 // вся логіка роботи додатка
 
-import { searchImagesByQuery } from './js/pixabay-api';
+import { searchImagesByQuery } from './js/pixabay-api.js';
 import { createGalery } from './js/render-functions.js';
  
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
-
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -35,21 +35,20 @@ async function handleFormSubmit(event) {
     
     loader.style.display = 'block';
     
-     try {
-        const data = await searchImagesByQuery(inputValue);
-        const imgMarkup = createGalery(data);
-        gallery.insertAdjacentHTML('beforeend', imgMarkup);
+    try {const data = await searchImagesByQuery(inputValue);
+    const imgMarkup = createGalery(data);
+    gallery.insertAdjacentHTML('beforeend', imgMarkup);
         modal.refresh();
-        if (data.totalHits === 0) {
+         if (data.totalHits === 0) {
             iziToast.error({
                 message: `❌ Sorry, there are no images matching your search query. Please try again!`,
             });
         }
-    } catch (err) {
+    } catch {
         (console.log)
     } finally {
         loader.style.display = 'none';
-        form.reset();
+      form.reset();
     }
 }
 
@@ -66,4 +65,4 @@ let modal = new SimpleLightbox('.gallery .gallery-link', {captionsData: 'alt',
   theme: 'dark',
   });
 
-  
+  searchImagesByQuery()
