@@ -64,20 +64,29 @@ body {
   border: 1px solid #808080;
 }
 
-.btn-search {
+
+.btn {
   border-radius: 8px;
-  padding: 8px 16px;
+    padding: 8px 16px;
+    align-items: center;
+      justify-content: center;
+      border: none;
+      padding: 8px 16px;
+      font-weight: 500;
+      color: #fff;
+      background-color: #4e75ff;
+}
+.btn-search {
   width: 90px;
   height: 40px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  border: none;
-  padding: 8px 16px;
-  font-weight: 500;
-  color: #fff;
-  background-color: #4e75ff;
+}
+
+.btn-load{
+      display: block;
+      margin: 0 auto;
+      min-width: 125px;
+      margin-top: 32px;
 }
 
 .form-search button:hover {
@@ -151,8 +160,8 @@ body {
 
 
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   border: 3px solid yellow;
   border-radius: 50%;
   display: inline-block;
@@ -161,6 +170,7 @@ body {
   animation: rotation 1s linear infinite;
   margin: 0 auto;
   margin-bottom: 36px;
+  margin-top: 8px;
 }
 
 .loader::after {
@@ -170,11 +180,11 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-bottom-color: #FF3D00;
+  border-bottom-color: blue;
 }
 
 @keyframes rotation {

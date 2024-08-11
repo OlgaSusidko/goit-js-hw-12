@@ -42,15 +42,16 @@ async function handleFormSubmit(event) {
         const data = await searchImagesByQuery(inputValue, currentPage);
         const imgMarkup = createGalery(data);
         gallery.insertAdjacentHTML('beforeend', imgMarkup);
-        loadMore.style.display = 'block';
+      loadMore.style.display = 'block';
+      scrollPage();
         modal.refresh();
 
          if (data.totalHits === 0) {
             iziToast.error({
                 message: `❌ Sorry, there are no images matching your search query. Please try again!`,
             });
-        }
-
+         }
+      
         if (data.totalHits > limit) {
             loadMore.style.display = 'block';
         } else {
@@ -73,6 +74,7 @@ loadMore.addEventListener('click', async () => {
     const data = await searchImagesByQuery(inputValue, currentPage);
     const imgMarkup = createGalery(data);
     gallery.insertAdjacentHTML('beforeend', imgMarkup);
+    scrollPage();
     modal.refresh();
 
     const totalPages = Math.ceil(data.totalHits / limit);
@@ -90,10 +92,19 @@ loadMore.addEventListener('click', async () => {
   }
 });
 
+function scrollPage() {
+  const card = document.querySelector('.gallery-item');
+
+  window.scrollBy({
+    top: card.getBoundingClientRect().height * 2,
+    behavior: 'smooth',
+  });
+}
 
 let modal = new SimpleLightbox('.gallery .gallery-link', {captionsData: 'alt',
-  captionDelay: 250,});
-
+  captionDelay: 250,
+});
+  
   iziToast.settings({
   class: 'izi-toast',
   position: 'topRight',
