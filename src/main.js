@@ -70,10 +70,10 @@ loadMore.addEventListener('click', async () => {
   loader.style.display = 'block';
 
   try {
-    const data = await searchImages(inputValue, currentPage);
+    const data = await searchImagesByQuery(inputValue, currentPage);
     const imgMarkup = createGalery(data);
     gallery.insertAdjacentHTML('beforeend', imgMarkup);
-    lightbox.refresh();
+    modal.refresh();
 
     const totalPages = Math.ceil(data.totalHits / limit);
 
@@ -83,7 +83,8 @@ loadMore.addEventListener('click', async () => {
                 message: `❌ We're sorry, but you've reached the end of search results.`,
             });
     }
-  } catch  {(console.log)
+  } catch (error) {
+    console.log(error)
   } finally {
     loader.style.display = 'none';
   }
