@@ -25,7 +25,7 @@ loadMore.style.display = 'none';
 
 async function handleFormSubmit(event) {
     event.preventDefault();
-    
+  
      inputValue = event.target.elements.query.value.trim().toLowerCase();
 
      if (inputValue === '') {
@@ -37,8 +37,10 @@ async function handleFormSubmit(event) {
      }
     
     loader.style.display = 'block';
-    
-    try {
+  gallery.innerHTML = '';
+  currentPage = 1;
+  
+  try {
         const data = await searchImagesByQuery(inputValue, currentPage);
         const imgMarkup = createGalery(data);
         gallery.insertAdjacentHTML('beforeend', imgMarkup);
@@ -61,7 +63,7 @@ async function handleFormSubmit(event) {
         
         (console.log)
     } finally {
-        loader.style.display = 'none';
+      loader.style.display = 'none';
       form.reset();
     }
 };
