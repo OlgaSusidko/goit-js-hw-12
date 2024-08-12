@@ -29,39 +29,42 @@ async function handleFormSubmit(event) {
      inputValue = event.target.elements.query.value.trim().toLowerCase();
 
      if (inputValue === '') {
-    gallery.innerHTML = '';
+       gallery.innerHTML = '';
+       loadMore.style.display = 'none';
     iziToast.error({
       message: 'Please enter a search query.',
     });
          return;
-     }
+  };
     
     loader.style.display = 'block';
   gallery.innerHTML = '';
   currentPage = 1;
-  
+
   try {
-        const data = await searchImagesByQuery(inputValue, currentPage);
+    const data = await searchImagesByQuery(inputValue, currentPage);
+    console.log(data);
+    
+    if (data.totalHits === 0) {
+       loadMore.style.display = 'none';
+            iziToast.error({
+                message: `❌ Sorry, there are no images matching your search query. Please try again!`,
+            });
+      return;
+    };
         const imgMarkup = createGalery(data);
         gallery.insertAdjacentHTML('beforeend', imgMarkup);
       loadMore.style.display = 'block';
       scrollPage();
         modal.refresh();
 
-         if (data.totalHits === 0) {
-            iziToast.error({
-                message: `❌ Sorry, there are no images matching your search query. Please try again!`,
-            });
-         }
-      
         if (data.totalHits > limit) {
             loadMore.style.display = 'block';
         } else {
             loadMore.style.display = 'none';
         };
-    } catch {
-        
-        (console.log)
+    } catch(error){
+        (console.log(error))
     } finally {
       loader.style.display = 'none';
       form.reset();
@@ -80,6 +83,14 @@ loadMore.addEventListener('click', async () => {
     modal.refresh();
 
     const totalPages = Math.ceil(data.totalHits / limit);
+
+    if (inputValue === '') {
+       gallery.innerHTML = '';
+    iziToast.error({
+      message: 'Please enter a search query.',
+    });
+         return;
+    }
 
     if (currentPage >= totalPages) {
       loadMore.style.display = 'none';
